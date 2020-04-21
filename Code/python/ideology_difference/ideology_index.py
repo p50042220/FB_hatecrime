@@ -82,8 +82,8 @@ def main():
 	save_dir = '/home3/r05322021/Desktop/FB Data/Polarization/'
 
 	if __name__ == '__main__':
-    	with Pool(processes=24) as pool:
-        	for _, x in enumerate(tqdm(pool.imap_unordered(partial(Calculate_difference, user_dir=user_path, page_dir=page_path, page_head=page_head, state_df=state_df), user_file_list), total=len(user_file_list)), 1):
+		with Pool(processed=24) as pool:
+			for _, x in enumerate(tqdm(pool.imap_unordered(partial(Calculate_difference, user_dir=user_path, page_dir=page_path, page_head=page_head, state_df=state_df), user_file_list), total=len(user_file_list)), 1):
 				x[0].to_csv(f'{save_dir}ideology_state_{x[1]}.csv', index=False)
 		
 
