@@ -1,5 +1,3 @@
-* [State information excluding primary candidates](Plot/state_validation) 
-* [polarization index](Plot/polarization)
-* pew research center data: No questions indicating polarization & different trend
-* Shapiro: Comparative approach -> state comparative?
-* text data: still classifying
+* [Pew Research Center Polarization](FB_hatecrime/Plot/polarization/pew_research_center) 
+* [Pew Research Center social media](FB_hatecrime/Plot/social_media)
+
