@@ -1,3 +1,4 @@
+## Pew Research Center
 * [Pew Research Center Polarization](https://github.com/p50042220/FB_hatecrime/tree/master/Plot/social_media) 
   - question: In general, would you describe your political views as...
   - Survey: American Trends Panel, Political Survey
@@ -7,4 +8,12 @@
   - Survey: Jan 2016 - American Trends Panel Wave 14
   - Ratio of respondents using social media as a part of political participation: 63%
   - question: Now, thinking specifically about posts and activities on social media related to politics, do you ever use social networking sites to...
-
+## Text Classification
+* SVM of race related posts: 
+  - avg accuracy of k-fold: 85%
+  - avg f-score of unrelated: 0.72
+  - avg f-score of related: 0.9
+* SVM of immigration related posts: 
+  - avg accuracy of k-fold: 81%
+  - avg f-score of unrelated: 0.87
+  - avg f-score of related: 0.67
