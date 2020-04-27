@@ -1,5 +1,5 @@
 ## Pew Research Center
-* [Pew Research Center Polarization](https://github.com/p50042220/FB_hatecrime/tree/master/Plot/social_media) 
+* [Pew Research Center Polarization](https://github.com/p50042220/FB_hatecrime/tree/master/Plot/social_media)
   - question: In general, would you describe your political views as...
   - Survey: American Trends Panel, Political Survey
 * [Pew Research Center social media](https://github.com/p50042220/FB_hatecrime/tree/master/Plot/polarization/pew_research_center)
@@ -37,5 +37,9 @@
   - avg accuracy of k-fold: 80%
   - avg f-score of unrelated: 0.81
   - avg f-score of related: 0.77
-  
+## Race/Immigration related posts&reaction statistics:
+* [Whole](https://github.com/p50042220/FB_hatecrime/tree/master/Plot/immigration_race/whole)
+* State level:
+  - [reaction amount](https://github.com/p50042220/FB_hatecrime/tree/master/Plot/immigration_race/state_like_amount)
+  - [reaction ratio](https://github.com/p50042220/FB_hatecrime/tree/master/Plot/immigration_race/state_like_ratio)
  
