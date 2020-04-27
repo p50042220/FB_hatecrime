@@ -37,7 +37,7 @@
   - avg accuracy of k-fold: 80%
   - avg f-score of unrelated: 0.81
   - avg f-score of related: 0.77
-## Race/Immigration related posts/reaction ratio:
+## Race/Immigration related posts&reaction statistics:
 * [Whole](https://github.com/p50042220/FB_hatecrime/tree/master/Plot/immigration_race/whole)
 * State level:
   - [reaction amount](https://github.com/p50042220/FB_hatecrime/tree/master/Plot/immigration_race/state_like_amount)
