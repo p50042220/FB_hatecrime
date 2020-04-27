@@ -31,19 +31,27 @@ def find_match_candidate_ideology(user_file, page_dir, page_head):
 
 	return trump, clinton
 
-def return_statistics(df):
+def return_statistics(df, total_mean, total_std):
 
 	polarization_mean = df[df.partisan == 'Trump']['user_PC1_mean_weighted'].mean() - df[df.partisan == 'Clinton']['user_PC1_mean_weighted'].mean()
 	polarization_median = df[df.partisan == 'Trump']['user_PC1_mean_weighted'].median() - df[df.partisan == 'Clinton']['user_PC1_mean_weighted'].median()
 	total = len(df)
 	trump_share = len(df[df.partisan == 'Trump'])/len(df)
 	clinton_share = 1 - trump_share
+	ideology_mean = df.user_PC1_mean_weighted.mean()
+	ideology_std = df.user_PC1_mean_weighted.std()
+	extreme_right_abs = len(df[df.user_PC1_mean_weighted > 1])/total
+	extreme_left_abs = len(df[df.user_PC1_mean_weighted < -1])/total
+	extreme_right_std = len(df[df.user_PC1_mean_weighted > (total_mean + total_std)])/total
+	extreme_left_std = len(df[df.user_PC1_mean_weighted < (total_mean - total_std)])/total
+	extreme_right_2std = len(df[df.user_PC1_mean_weighted > (total_mean + 2*total_std)])/total
+	extreme_left_2std = len(df[df.user_PC1_mean_weighted < (total_mean - 2*total_std)])/total
 	if 'state' not in df.columns:
 		state = 'whole'
 	else:
 		state = df['state'].iloc[0]
 
-	return [state, polarization_mean, polarization_median, total, trump_share, clinton_share]
+	return [state, ideology_mean, ideology_std, polarization_mean, polarization_median, total, trump_share, clinton_share, extreme_right_abs, extreme_left_abs, extreme_right_std, extreme_left_std, extreme_right_2std, extreme_left_2std]
 
 def Calculate_difference(user_file, user_dir, page_dir, page_head, state_df):
 
@@ -51,6 +59,8 @@ def Calculate_difference(user_file, user_dir, page_dir, page_head, state_df):
 	date = user_file[-14:-4]
 	user_df = pd.read_csv(f'{user_dir}{user_file}', usecols = ["user_id", "user_PC1_mean_weighted"], converters={'user_id': str})
 	user_df['partisan'] = user_df['user_PC1_mean_weighted'].apply(lambda x: 'Trump' if abs(x - trump) < abs(x - clinton) else 'Clinton')
+	total_mean = user_df.user_PC1_mean_weighted.mean()
+	total_std = user_df.user_PC1_mean_weighted.std()
 	state = pd.merge(user_df, state_df, how='inner', on='user_id')
 
 	state_list = [group[1] for group in state.groupby(state['state'])]
@@ -58,10 +68,10 @@ def Calculate_difference(user_file, user_dir, page_dir, page_head, state_df):
 	result_list = []
 	
 	for df in df_list:
-		result = return_statistics(df)
+		result = return_statistics(df, total_mean, total_std)
 		result_list.append(result)
 
-	result_df = pd.DataFrame(np.stack(result_list), columns=['state', 'polarization_mean', 'polarization_median', 'total', 'trump_share', 'clinton_share'])
+	result_df = pd.DataFrame(np.stack(result_list), columns=['state', 'ideology_mean', 'ideology_std', 'polarization_mean', 'polarization_median', 'total', 'trump_share', 'clinton_share', 'extreme_right_abs', 'extreme_left_abs', 'extreme_right_std', 'extreme_left_std', 'extreme_right_2std', 'extreme_left_2std'])
 
 	return [result_df, date]
 
