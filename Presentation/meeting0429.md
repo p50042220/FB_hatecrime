@@ -17,3 +17,25 @@
   - avg accuracy of k-fold: 81%
   - avg f-score of unrelated: 0.87
   - avg f-score of related: 0.67
+* LR of immigration related posts: 
+  - avg accuracy of k-fold: 80%
+  - avg f-score of unrelated: 0.86
+  - avg f-score of related: 0.68
+* SVM of Mexican related posts: 
+  - avg accuracy of k-fold: 93%
+  - avg f-score of unrelated: 0.95
+  - avg f-score of related: 0.53
+* LR of Mexican related posts: 
+  - avg accuracy of k-fold: 91%
+  - avg f-score of unrelated: 0.95
+  - avg f-score of related: 0.59
+* SVM of Muslim related posts: 
+  - avg accuracy of k-fold: 77%
+  - avg f-score of unrelated: 0.78
+  - avg f-score of related: 0.76
+* LR of Mexican related posts: 
+  - avg accuracy of k-fold: 80%
+  - avg f-score of unrelated: 0.81
+  - avg f-score of related: 0.77
+  
+ 
