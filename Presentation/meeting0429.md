@@ -8,6 +8,13 @@
   - Survey: Jan 2016 - American Trends Panel Wave 14
   - Ratio of respondents using social media as a part of political participation: 63%
   - question: Now, thinking specifically about posts and activities on social media related to politics, do you ever use social networking sites to...
+* [Comparison: FB Data](https://github.com/p50042220/FB_hatecrime/tree/master/Plot/polarization/FB/whole_time_reg)
+## State level Statistics Time Trend
+* [Polarization](https://github.com/p50042220/FB_hatecrime/tree/master/Plot/polarization/FB/polarization)
+* [Ideology mean](https://github.com/p50042220/FB_hatecrime/tree/master/Plot/polarization/FB/ideology)
+* [Trump Share](https://github.com/p50042220/FB_hatecrime/tree/master/Plot/polarization/FB/trump_share)
+* [User Amount](https://github.com/p50042220/FB_hatecrime/tree/master/Plot/polarization/FB/user_amount)
+* [Extreme Users](https://github.com/p50042220/FB_hatecrime/tree/master/Plot/polarization/FB/extreme_ratio)
 ## Text Classification
 * SVM of race related posts: 
   - avg accuracy of k-fold: 85%
@@ -42,4 +49,3 @@
 * State level:
   - [reaction amount](https://github.com/p50042220/FB_hatecrime/tree/master/Plot/immigration_race/state_like_amount)
   - [reaction ratio](https://github.com/p50042220/FB_hatecrime/tree/master/Plot/immigration_race/state_like_ratio)
- 
