@@ -15,6 +15,23 @@
 * [Trump Share](https://github.com/p50042220/FB_hatecrime/tree/master/Plot/polarization/FB/trump_share)
 * [User Amount](https://github.com/p50042220/FB_hatecrime/tree/master/Plot/polarization/FB/user_amount)
 * [Extreme Users](https://github.com/p50042220/FB_hatecrime/tree/master/Plot/polarization/FB/extreme_ratio)
+## Race/Immigration related posts&reaction statistics:
+* [Whole](https://github.com/p50042220/FB_hatecrime/tree/master/Plot/immigration_race/whole)
+* State level:
+  - [reaction amount](https://github.com/p50042220/FB_hatecrime/tree/master/Plot/immigration_race/state_like_amount)
+  - [reaction ratio](https://github.com/p50042220/FB_hatecrime/tree/master/Plot/immigration_race/state_like_ratio)
+  - [user amount](https://github.com/p50042220/FB_hatecrime/tree/master/Plot/immigration_race/state_user_amount)
+  - [user ratio](https://github.com/p50042220/FB_hatecrime/tree/master/Plot/immigration_race/state_user_ratio)
+## Relationship Between Hate Crime and Race/Immigration related statistics:
+* All Hate Crime:
+  - [Simultaneous](https://github.com/p50042220/FB_hatecrime/tree/master/Plot/Hate%20Crime/hate_crime/current)
+  - [Lag](https://github.com/p50042220/FB_hatecrime/tree/master/Plot/Hate%20Crime/hate_crime/lag)
+* Racial Hate Crime:
+  - [Simultaneous](https://github.com/p50042220/FB_hatecrime/tree/master/Plot/Hate%20Crime/racial_crime/current)
+  - [Lag](https://github.com/p50042220/FB_hatecrime/tree/master/Plot/Hate%20Crime/racial_crime/lag)
+* Racial & Religious Hate Crime:
+  - [Simultaneous](https://github.com/p50042220/FB_hatecrime/tree/master/Plot/Hate%20Crime/racial_broad_crime/current)
+  - [Lag](https://github.com/p50042220/FB_hatecrime/tree/master/Plot/Hate%20Crime/racial_broad_crime/lag)
 ## Text Classification
 * SVM of race related posts: 
   - avg accuracy of k-fold: 85%
@@ -44,21 +61,3 @@
   - avg accuracy of k-fold: 80%
   - avg f-score of unrelated: 0.81
   - avg f-score of related: 0.77
-## Race/Immigration related posts&reaction statistics:
-* [Whole](https://github.com/p50042220/FB_hatecrime/tree/master/Plot/immigration_race/whole)
-* State level:
-  - [reaction amount](https://github.com/p50042220/FB_hatecrime/tree/master/Plot/immigration_race/state_like_amount)
-  - [reaction ratio](https://github.com/p50042220/FB_hatecrime/tree/master/Plot/immigration_race/state_like_ratio)
-  - [user amount](https://github.com/p50042220/FB_hatecrime/tree/master/Plot/immigration_race/state_user_amount)
-  - [user ratio](https://github.com/p50042220/FB_hatecrime/tree/master/Plot/immigration_race/state_user_ratio)
-## Relationship Between Hate Crime and Race/Immigration related statistics:
-* All Hate Crime:
-  - [Simultaneous](https://github.com/p50042220/FB_hatecrime/tree/master/Plot/Hate%20Crime/hate_crime/current)
-  - [Lag](https://github.com/p50042220/FB_hatecrime/tree/master/Plot/Hate%20Crime/hate_crime/lag)
-* Racial Hate Crime:
-  - [Simultaneous](https://github.com/p50042220/FB_hatecrime/tree/master/Plot/Hate%20Crime/racial_crime/current)
-  - [Lag](https://github.com/p50042220/FB_hatecrime/tree/master/Plot/Hate%20Crime/racial_crime/lag)
-* Racial & Religious Hate Crime:
-  - [Simultaneous](https://github.com/p50042220/FB_hatecrime/tree/master/Plot/Hate%20Crime/racial_broad_crime/current)
-  - [Lag](https://github.com/p50042220/FB_hatecrime/tree/master/Plot/Hate%20Crime/racial_broad_crime/lag)
-  
