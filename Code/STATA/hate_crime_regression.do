@@ -14,7 +14,7 @@ sort state date
 by state: gen user_amount_lag1 = related_user_amount[_n-1]
 by state: gen user_amount_pre1 = related_user_amount[_n+1]
 bysort state: egen crime_mean=mean(hate_crime)
-bysort state: gen k=_hate_crime
+bysort state: gen k=hate_crime
 sum crime_mean if crime_indicator==1
 sum crime_mean if k==1, detail
 count if crime_mean > 1 & hate_crime==0
