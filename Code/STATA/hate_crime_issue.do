@@ -4,9 +4,10 @@ encode state, gen(nstate)
 gen crime_indicator = hate_crime > 0
 gen date = date(week, "YMD")
 format date %td
-xtset nstate date, delta(7)
 sort state date
 gen hate_cr = hate_crime_rate * 10000
+gen user_total = round(related_user_amount/related_user_ratio)
+gen FB_ratio = user_total/population
 
 //Summary Statistics
 //Calculate state-level mean
@@ -36,36 +37,126 @@ tab hate_crime_rate if crime_mean > 0.7
 sum hate_crime_rate if crime_mean > 0.7
 twoway scatter hate_crime nstate, msymbol(circle_hollow) || connected crime_mean nstate, msymbol(diamond)
 
-//Generate lag variable
-by state: gen user_amount_lag1 = related_user_amount[_n-1]
-by state: gen user_amount_pre1 = related_user_amount[_n+1]
-by state: gen user_ratio_lag1 = related_user_ratio[_n-1]
-by state: gen user_ratio_pre1 = related_user_ratio[_n+1]
-
 //Generate log variable
 gen ln_pop = ln(population)
 gen ln_user_amt = ln(related_user_amount)
 gen ln_user_ratio = ln(related_user_ratio)
-gen ln_user_amt_lag1 = ln(user_amount_lag1)
-gen ln_user_amt_pre1 = ln(user_amount_pre1)
-gen ln_user_ratio_lag1 = ln(user_ratio_lag1)
-gen ln_user_ratio_pre1 = ln(user_ratio_pre1)
 gen ln_hate_cr = ln(hate_cr)
+gen ln_user_total = ln(user_total)
+gen ln_FB_ratio = ln(FB_ratio)
+gen ln_reaction_amt = ln(related_reaction_amount)
 
-//Poisson Model
-xtpoisson hate_crime ln_user_amt i.date population, fe robust
-estimates store fe
-xtpoisson hate_crime ln_user_amt i.date population, re 
-estimates store re
-xtoverid 
-testparm i.date
-xtpoisson hate_crime ln_user_amt i.date population, re robust
+xtset nstate date, delta(7)
 
-xtreg hate_crime ln_user_amt i.date population, fe vce(robust)
-estimates store fe
-xtreg hate_crime ln_user_amt i.date population, re vce(robust)
-estimates store re
-xtoverid 
+// User Amount Regression
+foreach var in hate_crime racial_crime racial_broad_crime{
+	
+	xtreg `var' related_user_amount i.date population user_total, fe robust
+	xtreg `var' related_user_amount i.date population FB_ratio, fe robust
+	xtreg `var' related_user_amount i.date ln_pop ln_user_total, fe robust
+	xtreg `var' related_user_amount i.date ln_pop FB_ratio, fe robust
+	xtreg `var' related_user_amount i.date ln_pop ln_FB_ratio, fe robust
+	
+}
+
+foreach var in hate_crime racial_crime racial_broad_crime{
+	
+	xtreg `var' ln_user_amt i.date population user_total, fe robust
+	xtreg `var' ln_user_amt i.date population FB_ratio, fe robust
+	xtreg `var' ln_user_amt i.date ln_pop ln_user_total, fe robust
+	xtreg `var' ln_user_amt i.date ln_pop FB_ratio, fe robust
+	xtreg `var' ln_user_amt i.date ln_pop ln_FB_ratio, fe robust
+	
+}
+
+// Reaction Amount
+foreach var in hate_crime racial_crime racial_broad_crime{
+	
+	xtreg `var' related_reaction_amount i.date population user_total, fe robust
+	xtreg `var' related_reaction_amount i.date population FB_ratio, fe robust
+	xtreg `var' related_reaction_amount i.date ln_pop ln_user_total, fe robust
+	xtreg `var' related_reaction_amount i.date ln_pop FB_ratio, fe robust
+	xtreg `var' related_reaction_amount i.date ln_pop ln_FB_ratio, fe robust
+	
+}
+
+foreach var in hate_crime racial_crime racial_broad_crime{
+	
+	xtreg `var' ln_reaction_amt i.date population user_total, fe robust
+	xtreg `var' ln_reaction_amt i.date population FB_ratio, fe robust
+	xtreg `var' ln_reaction_amt i.date ln_pop ln_user_total, fe robust
+	xtreg `var' ln_reaction_amt i.date ln_pop FB_ratio, fe robust
+	xtreg `var' ln_reaction_amt i.date ln_pop ln_FB_ratio, fe robust
+	
+}
+
+// User Amount lag
+foreach var in hate_crime racial_crime racial_broad_crime{
+	
+	xtreg `var' l.related_user_amount i.date population l.user_total, fe robust
+	xtreg `var' l.related_user_amount i.date population l.FB_ratio, fe robust
+	xtreg `var' l.related_user_amount i.date ln_pop l.ln_user_total, fe robust
+	xtreg `var' l.related_user_amount i.date ln_pop l.FB_ratio, fe robust
+	xtreg `var' l.related_user_amount i.date ln_pop l.ln_FB_ratio, fe robust
+	
+}
+
+foreach var in hate_crime racial_crime racial_broad_crime{
+	
+	xtreg `var' l.ln_user_amt i.date population l.user_total, fe robust
+	xtreg `var' l.ln_user_amt i.date population l.FB_ratio, fe robust
+	xtreg `var' l.ln_user_amt i.date ln_pop l.ln_user_total, fe robust
+	xtreg `var' l.ln_user_amt i.date ln_pop l.FB_ratio, fe robust
+	xtreg `var' l.ln_user_amt i.date ln_pop l.ln_FB_ratio, fe robust
+	
+}
+
+foreach var in hate_crime racial_crime racial_broad_crime{
+	
+	xtreg `var' l.ln_user_amt i.date population user_total, fe robust
+	xtreg `var' l.ln_user_amt i.date population FB_ratio, fe robust
+	xtreg `var' l.ln_user_amt i.date ln_pop ln_user_total, fe robust
+	xtreg `var' l.ln_user_amt i.date ln_pop FB_ratio, fe robust
+	xtreg `var' l.ln_user_amt i.date ln_pop ln_FB_ratio, fe robust
+	
+}
+
+// Reaction Amount lag
+foreach var in hate_crime racial_crime racial_broad_crime{
+	
+	xtreg `var' l.related_reaction_amount i.date population l.user_total, fe robust
+	xtreg `var' l.related_reaction_amount i.date population l.FB_ratio, fe robust
+	xtreg `var' l.related_reaction_amount i.date ln_pop l.ln_user_total, fe robust
+	xtreg `var' l.related_reaction_amount i.date ln_pop l.FB_ratio, fe robust
+	xtreg `var' l.related_reaction_amount i.date ln_pop l.ln_FB_ratio, fe robust
+	
+}
+
+foreach var in hate_crime racial_crime racial_broad_crime{
+	
+	xtreg `var' l.ln_reaction_amt i.date population l.user_total, fe robust
+	xtreg `var' l.ln_reaction_amt i.date population l.FB_ratio, fe robust
+	xtreg `var' l.ln_reaction_amt i.date ln_pop l.ln_user_total, fe robust
+	xtreg `var' l.ln_reaction_amt i.date ln_pop l.FB_ratio, fe robust
+	xtreg `var' l.ln_reaction_amt i.date ln_pop l.ln_FB_ratio, fe robust
+	
+}
+
+foreach var in hate_crime racial_crime racial_broad_crime{
+	
+	xtreg `var' l.ln_reaction_amt i.date population user_total, fe robust
+	xtreg `var' l.ln_reaction_amt i.date population FB_ratio, fe robust
+	xtreg `var' l.ln_reaction_amt i.date ln_pop ln_user_total, fe robust
+	xtreg `var' l.ln_reaction_amt i.date ln_pop FB_ratio, fe robust
+	xtreg `var' l.ln_reaction_amt i.date ln_pop ln_FB_ratio, fe robust
+	
+}
+
+
+
+
+
+
 
 
 
