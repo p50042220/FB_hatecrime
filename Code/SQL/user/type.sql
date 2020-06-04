@@ -1,7 +1,8 @@
+-- Type Definition
 SELECT *,
-        CASE WHEN start_week = '2015-05-03' AND quit_week = '2016-11-20' THEN "WHOLE"
-            WHEN start_week > '2015-05-03' AND quit_week = '2016-11-20' THEN "NEW"
-            WHEN start_week = '2015-05-03' AND quit_week < '2016-11-20' THEN "QUIT"
+        CASE WHEN start_week <= '2015-05-24' AND quit_week = '2016-11-20' THEN "WHOLE"
+            WHEN start_week > '2015-05-24' AND quit_week = '2016-11-20' THEN "NEW"
+            WHEN start_week <= '2015-05-24' AND quit_week < '2016-11-20' THEN "QUIT"
             ELSE "NEW_QUIT" END AS TYPE
 FROM
 (SELECT user_id,
@@ -33,3 +34,14 @@ AND TIMESTAMP(post_created_date_CT) < TIMESTAMP('2016-11-27'))
 GROUP BY user_id, Week)
 WHERE week_total > 0)
 GROUP BY user_id)
+
+-- Combine with Geographical Information
+SELECT A.user_id,
+        B.state,
+        A.TYPE,
+        A.total_week,
+        A.start_week,
+        A.quit_week
+FROM `ntufbdata.user_type.user_entering_type` AS A
+INNER JOIN `ntufbdata.us_user_info.user_like_state_max_exclude_primary_all` AS B
+ON A.user_id = B.user_id
