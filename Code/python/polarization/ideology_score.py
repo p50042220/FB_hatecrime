@@ -55,4 +55,8 @@ def main(user_type):
     if __name__ == '__main__':
         with Pool(processes=24) as pool:
             pool.map(partial(user_score, user_type=user_type, path_head=path_head), file_list)
-    
+
+
+if __name__ == '__main__':
+    user_type = sys.argv[1]
+    main(user_type)
