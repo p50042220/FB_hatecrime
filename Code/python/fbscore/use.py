@@ -95,13 +95,13 @@ def fb_score(input_format, output_format, input_path, output_path,
         page_page_df = base.us_user_page_to_page_page_matrix(user_like)
         if(output_order == 0):
             write.write_page_page_matrix(page_page_df,  output_path, overwrite_file)
-            return(page_page_df)
+            # return(page_page_df)
         elif(output_order == 1):
             ("start turning  page_page_matrix to page_score")
             page_score_df = base.page_page_matrix_to_page_score(page_page_df, page_info_data, 
                                     clinton_on_the_left)
             write.write_page_score_data(page_score_df,  output_path, overwrite_file)
-            return(page_score_df)
+            # return(page_score_df)
         elif(output_order == 2):
             print("start turning  page_page_matrix to page_score")
             page_score_df = base.page_page_matrix_to_page_score(page_page_df, page_info_data, 
@@ -109,7 +109,7 @@ def fb_score(input_format, output_format, input_path, output_path,
             print("start turning page_score to user_score")
             user_score_df = base.page_score_to_user_score(page_score_df, user_like_page_data)
             write.write_user_score_data(user_score_df,  output_path, overwrite_file)
-            return(user_score_df)
+            # return(user_score_df)
 
     elif(input_order == 1):
         print("start reading page page matrix")
@@ -119,12 +119,12 @@ def fb_score(input_format, output_format, input_path, output_path,
                                     clinton_on_the_left)
         if(output_order == 1):
             write.write_page_score_data(page_score_df,  output_path, overwrite_file)
-            return(page_score_df)           
+            # return(page_score_df)           
         elif(output_order == 2):
             print("start turning page_score to user_score")
             user_score_df = base.page_score_to_user_score(page_score_df, user_like_page_data)
             write.write_user_score_data(user_score_df,  output_path, overwrite_file)
-            return(user_score_df)
+            # return(user_score_df)
 
     elif(input_order == 2):
         print("start reading page score data")
@@ -132,7 +132,7 @@ def fb_score(input_format, output_format, input_path, output_path,
         print("start turning page_score to user_score")
         user_score_df = base.page_score_to_user_score(page_score_df, user_like_page_data)
         write.write_user_score_data(user_score_df,  output_path, overwrite_file)
-        return(user_score_df)
+        # return(user_score_df)
 
 
 
