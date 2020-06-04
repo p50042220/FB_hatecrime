@@ -142,9 +142,9 @@ def page_score_to_user_score(page_score_dataframe, user_like_page_data):
         user_id = user_like_page_data["user_id"][i]
         like_page_list_str = user_like_page_data["like_pages"][i].split(",")
         like_page_list = list(map( int, like_page_list_str))
-    #    like_time_list = user_like_page_data["like_times"][i].split(",")
+        like_time_list = user_like_page_data["like_times"][i].split(",")
         page_score_list = []
-    #    like_times_list = []
+        like_times_list = []
         page_score_ungroup = []
         
         """from two lists above, find pages that we have calculated ideology 
@@ -154,7 +154,7 @@ def page_score_to_user_score(page_score_dataframe, user_like_page_data):
             if page_id in page_score_dataframe.index:
                 page_score_list.append(float(
                     page_score_dataframe["PC1_std"][page_id]))
-    #            like_times_list.append(int(like_time_list[j]))
+                like_times_list.append(int(like_time_list[j]))
 
         """Compute user ideology score if the user has liked at least one page
         that we calculated ideology scores by mean, median, weighted mean,
@@ -162,21 +162,21 @@ def page_score_to_user_score(page_score_dataframe, user_like_page_data):
         that user liked the page's post. 
         """
         if len(page_score_list) > 0:
-    #        for k in range(0, len(page_score_list)):
-    #            page_score_ungroup += [page_score_list[k]] * like_times_list[k]
+            for k in range(0, len(page_score_list)):
+                page_score_ungroup += [page_score_list[k]] * like_times_list[k]
             
             user_score_dict[user_id] = [st.mean(page_score_list), 
                                         st.median(page_score_list), 
-    #                                    st.mean(page_score_ungroup),
-    #                                    st.median(page_score_ungroup)
-                                        ]#
+                                        st.mean(page_score_ungroup),
+                                        st.median(page_score_ungroup)
+                                        ]
     
     user_score_dataframe = pd.DataFrame.from_dict(user_score_dict, 
         orient = 'index')
     user_score_dataframe.columns = ["user_PC1_mean", 
                                     "user_PC1_median", 
-    #                                "user_PC1_mean_weighted", 
-    #                                "user_PC1_median_weighted"
+                                    "user_PC1_mean_weighted", 
+                                    "user_PC1_median_weighted"
                                     ]
     user_score_dataframe.index.names = ["user_id"]
 
