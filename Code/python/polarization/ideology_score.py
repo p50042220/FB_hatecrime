@@ -51,10 +51,10 @@ def main(user_type):
         with Pool(processes=24) as pool:
             pool.map(partial(page_score, user_type=user_type, path_head=path_head), file_list)
 
-    print("User Score Calculation")
-    if __name__ == '__main__':
-        with Pool(processes=24) as pool:
-            pool.map(partial(user_score, user_type=user_type, path_head=path_head), file_list)
+    #print("User Score Calculation")
+    #if __name__ == '__main__':
+        #with Pool(processes=24) as pool:
+            #pool.map(partial(user_score, user_type=user_type, path_head=path_head), file_list)
 
 
 if __name__ == '__main__':

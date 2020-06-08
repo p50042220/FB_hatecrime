@@ -29,7 +29,7 @@ def read_data(input_path):
 def main():
 
     path = '/home3/r05322021/Desktop/FB Data/comment/sentiment/'
-    file_path = [f'{path}{f}' for f in os.listdir(path) if (f <= '2016-11-20') and (f >= '2015-05-03')]
+    file_path = [f'{path}{f}' for f in os.listdir(path) if (f <= '2016-11-21') and (f >= '2015-05-03')]
     df_list = []
 
     if __name__ == '__main__':
