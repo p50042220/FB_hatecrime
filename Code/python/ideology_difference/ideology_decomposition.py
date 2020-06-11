@@ -7,6 +7,7 @@ from functools import partial
 from tqdm import tqdm as tqdm
 import pydata_google_auth
 import pandas_gbq as gbq
+import sys
 
 def bigquery_auth():
     SCOPES = [
@@ -74,7 +75,7 @@ def Calculate_difference(file_name, input_path, user_type, state_df):
 
 	return [result_df, date]
 
-def main():
+def main(user_type):
 	input_path = "/home3/r05322021/Desktop/FB Data/Polarization/"
 	user_file_list = os.listdir(f'{input_path}user_score/{user_type}')
 
@@ -92,9 +93,10 @@ def main():
 
 	if __name__ == '__main__':
 		with Pool(processes=24) as pool:
-			for _, x in enumerate(tqdm(pool.imap_unordered(partial(Calculate_difference, user_dir=user_path, page_dir=page_path, page_head=page_head, state_df=state_df), user_file_list), total=len(user_file_list)), 1):
+			for _, x in enumerate(tqdm(pool.imap_unordered(partial(Calculate_difference, input_path=input_path, user_type=user_type, state_df=state_df), user_file_list), total=len(user_file_list)), 1):
 				x[0].to_csv(f'{save_dir}ideology_state_{x[1]}.csv', index=False)
 		
 
 if __name__ == '__main__':
-    main()
+    user_type = sys.argv[1]
+    main(user_type)
