@@ -60,6 +60,16 @@ xtset nagency date, delta(7)
 
 foreach var in hate_crime racial_crime racial_broad_crime{
 	
+	xtreg `var' ln_reaction_amt i.date population user_total if core_city == "Y", fe robust
+	xtreg `var' ln_reaction_amt i.date population FB_ratio if core_city == "Y", fe robust
+	xtreg `var' ln_reaction_amt i.date ln_pop ln_user_total if core_city == "Y", fe robust
+	xtreg `var' ln_reaction_amt i.date ln_pop FB_ratio if core_city == "Y", fe robust
+	xtreg `var' ln_reaction_amt i.date ln_pop ln_FB_ratio if core_city == "Y", fe robust
+	
+}
+
+foreach var in hate_crime racial_crime racial_broad_crime{
+	
 	xtreg `var' ln_reaction_amt i.date population user_total if crime_times > 5, fe robust
 	xtreg `var' ln_reaction_amt i.date population FB_ratio if crime_times > 5, fe robust
 	xtreg `var' ln_reaction_amt i.date ln_pop ln_user_total if crime_times > 5, fe robust
