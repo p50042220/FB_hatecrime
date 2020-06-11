@@ -51,6 +51,7 @@ gen ln_FB_ratio = ln(FB_ratio)
 gen ln_reaction_amt = ln(related_reaction_amount)
 gen ln_post_amt = ln(related_post_amount)
 gen ln_reaction_post_ratio = ln(reaction_post_ratio)
+gen ln_comment_amt = ln(related_comment_amount)
 
 //Generate Candidate Indicator
 gen Trump = 0
@@ -623,8 +624,8 @@ foreach var in hate_crime racial_crime racial_broad_crime{
 }
 log close
 
-// Reaction Amount with Trump
-log using "D:\FB_hatecrime\Result\Hate Crime Issue\comment_amount_ideo.log"
+// Comment Amount with Trump
+log using "D:\FB_hatecrime\Result\Hate Crime Issue\comment_amount_ideo.log", replace
 foreach var in hate_crime racial_crime racial_broad_crime{
 	
 	xtreg `var' related_comment_amount i.date population user_total Trump, fe robust
@@ -637,31 +638,79 @@ foreach var in hate_crime racial_crime racial_broad_crime{
 
 foreach var in hate_crime racial_crime racial_broad_crime{
 	
-	xtreg `var' ln_reaction_amt i.date population user_total Trump, fe robust
-	xtreg `var' ln_reaction_amt i.date population FB_ratio Trump, fe robust
-	xtreg `var' ln_reaction_amt i.date ln_pop ln_user_total Trump, fe robust
-	xtreg `var' ln_reaction_amt i.date ln_pop FB_ratio Trump, fe robust
-	xtreg `var' ln_reaction_amt i.date ln_pop ln_FB_ratio Trump, fe robust
+	xtreg `var' ln_comment_amt i.date population user_total Trump, fe robust
+	xtreg `var' ln_comment_amt i.date population FB_ratio Trump, fe robust
+	xtreg `var' ln_comment_amt i.date ln_pop ln_user_total Trump, fe robust
+	xtreg `var' ln_comment_amt i.date ln_pop FB_ratio Trump, fe robust
+	xtreg `var' ln_comment_amt i.date ln_pop ln_FB_ratio Trump, fe robust
 	
 }
 
 foreach var in hate_crime racial_crime racial_broad_crime{
 	
-	xtreg `var' related_reaction_amount i.date population user_total trump_share, fe robust
-	xtreg `var' related_reaction_amount i.date population FB_ratio trump_share, fe robust
-	xtreg `var' related_reaction_amount i.date ln_pop ln_user_total trump_share, fe robust
-	xtreg `var' related_reaction_amount i.date ln_pop FB_ratio trump_share, fe robust
-	xtreg `var' related_reaction_amount i.date ln_pop ln_FB_ratio trump_share, fe robust
+	xtreg `var' related_comment_amount i.date population user_total trump_share, fe robust
+	xtreg `var' related_comment_amount i.date population FB_ratio trump_share, fe robust
+	xtreg `var' related_comment_amount i.date ln_pop ln_user_total trump_share, fe robust
+	xtreg `var' related_comment_amount i.date ln_pop FB_ratio trump_share, fe robust
+	xtreg `var' related_comment_amount i.date ln_pop ln_FB_ratio trump_share, fe robust
 	
 }
 
 foreach var in hate_crime racial_crime racial_broad_crime{
 	
-	xtreg `var' ln_reaction_amt i.date population user_total trump_share, fe robust
-	xtreg `var' ln_reaction_amt i.date population FB_ratio trump_share, fe robust
-	xtreg `var' ln_reaction_amt i.date ln_pop ln_user_total trump_share, fe robust
-	xtreg `var' ln_reaction_amt i.date ln_pop FB_ratio trump_share, fe robust
-	xtreg `var' ln_reaction_amt i.date ln_pop ln_FB_ratio trump_share, fe robust
+	xtreg `var' ln_comment_amt i.date population user_total trump_share, fe robust
+	xtreg `var' ln_comment_amt i.date population FB_ratio trump_share, fe robust
+	xtreg `var' ln_comment_amt i.date ln_pop ln_user_total trump_share, fe robust
+	xtreg `var' ln_comment_amt i.date ln_pop FB_ratio trump_share, fe robust
+	xtreg `var' ln_comment_amt i.date ln_pop ln_FB_ratio trump_share, fe robust
+	
+}
+log close
+
+// Comment Length with Trump
+log using "D:\FB_hatecrime\Result\Hate Crime Issue\comment_length_ideo.log", replace
+foreach var in hate_crime racial_crime racial_broad_crime{
+	
+	xtreg `var' related_comment_length i.date population user_total Trump, fe robust
+	xtreg `var' related_comment_length i.date population FB_ratio Trump, fe robust
+	xtreg `var' related_comment_length i.date ln_pop ln_user_total Trump, fe robust
+	xtreg `var' related_comment_length i.date ln_pop FB_ratio Trump, fe robust
+	xtreg `var' related_comment_length i.date ln_pop ln_FB_ratio Trump, fe robust
+	
+}
+
+
+foreach var in hate_crime racial_crime racial_broad_crime{
+	
+	xtreg `var' related_comment_length i.date population user_total trump_share, fe robust
+	xtreg `var' related_comment_length i.date population FB_ratio trump_share, fe robust
+	xtreg `var' related_comment_length i.date ln_pop ln_user_total trump_share, fe robust
+	xtreg `var' related_comment_length i.date ln_pop FB_ratio trump_share, fe robust
+	xtreg `var' related_comment_length i.date ln_pop ln_FB_ratio trump_share, fe robust
+	
+}
+log close
+
+// Comment sentiment with Trump
+log using "D:\FB_hatecrime\Result\Hate Crime Issue\comment_sentiment_ideo.log", replace
+foreach var in hate_crime racial_crime racial_broad_crime{
+	
+	xtreg `var' related_comment_sentiment i.date population user_total Trump, fe robust
+	xtreg `var' related_comment_sentiment i.date population FB_ratio Trump, fe robust
+	xtreg `var' related_comment_sentiment i.date ln_pop ln_user_total Trump, fe robust
+	xtreg `var' related_comment_sentiment i.date ln_pop FB_ratio Trump, fe robust
+	xtreg `var' related_comment_sentiment i.date ln_pop ln_FB_ratio Trump, fe robust
+	
+}
+
+
+foreach var in hate_crime racial_crime racial_broad_crime{
+	
+	xtreg `var' related_comment_sentiment i.date population user_total trump_share, fe robust
+	xtreg `var' related_comment_sentiment i.date population FB_ratio trump_share, fe robust
+	xtreg `var' related_comment_sentiment i.date ln_pop ln_user_total trump_share, fe robust
+	xtreg `var' related_comment_sentiment i.date ln_pop FB_ratio trump_share, fe robust
+	xtreg `var' related_comment_sentiment i.date ln_pop ln_FB_ratio trump_share, fe robust
 	
 }
 log close
@@ -794,7 +843,7 @@ log close
 
 
 // Reaction Amount lag
-log using "D:\FB_hatecrime\Result\Hate Crime Issue\reaction_amount_lag_ideo.log"
+log using "D:\FB_hatecrime\Result\Hate Crime Issue\comment_amount_lag_ideo.log"
 foreach var in hate_crime racial_crime racial_broad_crime{
 	
 	xtreg `var' l.related_reaction_amount i.date population l.user_total Trump, fe robust
