@@ -74,7 +74,7 @@ def main(user_type):
     output_path = f'/home3/r05322021/Desktop/FB Data/Polarization/user_like_page/{user_type}/'
 
     if __name__ == '__main__':
-        with ThreadPool(processes=24) as pool:
+        with ThreadPool(processes=10) as pool:
             pool.map(partial(query_data, user_type=user_type.upper(), output_path=output_path), end_date_list)
     
 if __name__ == '__main__':
