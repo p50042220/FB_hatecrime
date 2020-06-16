@@ -14,13 +14,13 @@ def combine_user_file(filename, user_type, path_head):
 
     input_path = f'{path_head}user_like_page/{user_type}/'
     whole_path = f'{path_head}user_like_page/whole/'
-    output_path = f'{path_head}page_score/{user_type}/'
 
-    type_df = pd.read_csv(f'{input_path}{filename}', converters={'user_id': str})
-    whole_df = pd.read_csv(f'{whole_path}{filename}', converters={'user_id': str})
+    type_df = pd.read_csv(f'{input_path}{filename}', converters={'user_id': str, 'like_pages': str, 'like_times': str})
+    whole_df = pd.read_csv(f'{whole_path}{filename}', converters={'user_id': str, 'like_pages': str, 'like_times': str})
+    type_df['type'] = user_type
+    whole_df['type'] = 'whole'
     df = pd.concat([type_df, whole_df], axis=0)
-
-    return df
+    df.to_csv(f'{input_path}{filename}', index=False)
 
 def page_score(filename, user_type, path_head):
 
@@ -57,16 +57,16 @@ def main(user_type):
     path_head = '/home3/r05322021/Desktop/FB Data/Polarization/'
     file_list = [filename for filename in os.listdir(f'{path_head}user_like_page/{user_type}/')]
 
-    if user_type != 'whole':
-        print('Combining user like pages')
-        if __name__ == '__main__':
-            with Pool(processes=5) as pool:
-                pool.map(partial(combine_user_file, user_type=user_type, path_head=path_head), file_list)
+    #if user_type != 'whole':
+        #print('Combining user like pages')
+        #if __name__ == '__main__':
+            #with Pool(processes=5) as pool:
+                #pool.map(partial(combine_user_file, user_type=user_type, path_head=path_head), file_list)
 
-    print("Page Score Calculation")
-    if __name__ == '__main__':
-        with Pool(processes=5) as pool:
-            pool.map(partial(page_score, user_type=user_type, path_head=path_head), file_list)
+    #print("Page Score Calculation")
+    #if __name__ == '__main__':
+        #with Pool(processes=5) as pool:
+            #pool.map(partial(page_score, user_type=user_type, path_head=path_head), file_list)
 
     print("User Score Calculation")
     if __name__ == '__main__':

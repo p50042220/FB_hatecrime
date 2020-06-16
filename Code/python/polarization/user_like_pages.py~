@@ -33,9 +33,14 @@ def query_data(end_date, user_type, output_path):
     end_date = end_date.strftime('%Y-%m-%d')
     query = f'''
             WITH OLD_USER AS(
-                SELECT user_id
+                (SELECT user_id, TYPE
                 FROM `ntufbdata.user_type.user_entering_type`
-                WHERE TYPE = '{user_type}'
+                WHERE TYPE = '{user_type}')
+		UNION DISTINCT
+		(SELECT user_id, TYPE
+                FROM `ntufbdata.user_type.user_entering_type`
+                WHERE TYPE = 'WHOLE')
+
             ), REACTION AS(
                 (SELECT user_id,
                         SPLIT(post_id, '_')[ORDINAL(1)] AS page_id,
@@ -53,16 +58,18 @@ def query_data(end_date, user_type, output_path):
             )
 
             SELECT user_id,
+		    TYPE,
                     STRING_AGG(page_id, ',') AS like_pages,
                     STRING_AGG(CAST(like_time AS STRING), ',') AS like_times
             FROM(
             SELECT OLD_USER.user_id,
+		    OLD_USER.TYPE,
                     REACTION.page_id,
                     COUNT(*) AS like_time
             FROM OLD_USER
             INNER JOIN REACTION ON OLD_USER.user_id = REACTION.user_id
-            GROUP BY OLD_USER.user_id, REACTION.page_id)
-            GROUP BY user_id
+            GROUP BY OLD_USER.user_id, OLD_USER.TYPE, REACTION.page_id)
+            GROUP BY user_id, TYPE
             '''
 
     user_like_pages = gbq.read_gbq(query, project_id='ntufbdata')
