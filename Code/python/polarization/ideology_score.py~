@@ -57,21 +57,16 @@ def main(user_type):
     path_head = '/home3/r05322021/Desktop/FB Data/Polarization/'
     file_list = [filename for filename in os.listdir(f'{path_head}user_like_page/{user_type}/')]
 
-    #if user_type != 'whole':
-        #print('Combining user like pages')
-        #if __name__ == '__main__':
-            #with Pool(processes=5) as pool:
-                #pool.map(partial(combine_user_file, user_type=user_type, path_head=path_head), file_list)
 
-    #print("Page Score Calculation")
-    #if __name__ == '__main__':
-        #with Pool(processes=5) as pool:
-            #pool.map(partial(page_score, user_type=user_type, path_head=path_head), file_list)
-
-    print("User Score Calculation")
+    print("Page Score Calculation")
     if __name__ == '__main__':
         with Pool(processes=5) as pool:
-            pool.map(partial(user_score, user_type=user_type, path_head=path_head), file_list)
+            pool.map(partial(page_score, user_type=user_type, path_head=path_head), file_list)
+
+    #print("User Score Calculation")
+    #if __name__ == '__main__':
+        #with Pool(processes=5) as pool:
+            #pool.map(partial(user_score, user_type=user_type, path_head=path_head), file_list)
 
 
 if __name__ == '__main__':

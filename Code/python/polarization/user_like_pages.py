@@ -77,11 +77,12 @@ def query_data(end_date, user_type, output_path):
 
 def main(user_type):
 
-    end_date_list = [date(2015,5,30) + timedelta(days=d) for d in range(0, 547, 7)]
+    #end_date_list = [date(2015,5,30) + timedelta(days=d) for d in range(0, 547, 7)]
+    end_date_list = [date(2016,1,23), date(2016,1,30), date(2016,2,6), date(2016,2,13), date(2016,5,28), date(2016,6,4)]
     output_path = f'/home3/r05322021/Desktop/FB Data/Polarization/user_like_page/{user_type}/'
 
     if __name__ == '__main__':
-        with ThreadPool(processes=10) as pool:
+        with ThreadPool(processes=3) as pool:
             pool.map(partial(query_data, user_type=user_type.upper(), output_path=output_path), end_date_list)
     
 if __name__ == '__main__':
