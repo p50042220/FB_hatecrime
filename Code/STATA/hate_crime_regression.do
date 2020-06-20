@@ -1,23 +1,26 @@
 //Whole Data
-cd"/Users/penny/Desktop/"
-import delimited "/Users/penny/Desktop/hatecrime_racial_reg.csv", encoding(ISO-8859-1)
-encode state_name, gen(nstate)
-encode candidate, gen(ncandidate)
-gen crime = n > 0
-xtset nstate week
+// cd"/Users/penny/Desktop/"
+import delimited "D:\FB_hatecrime\Data\Hate Crime\Regression\immigration_race_regression.csv"
+", encoding(ISO-8859-1)
+encode state, gen(nstate)
+// encode candidate, gen(ncandidate)
+gen crime_indicator = hate_crime > 0
+gen date = date(week, "YMD")
+format date %td
+xtset nstate date, delta(7)
 
-sort state_name week
+sort state date
 //Summary Statistics
-by state: gen lag1 = mean_diff[_n-1]
-by state: gen pre1 = mean_diff[_n+1]
-bysort state_name: egen crime_mean=mean(n)
-bysort state_name: gen k=_n
-sum crime_mean if k==1
+by state: gen user_amount_lag1 = related_user_amount[_n-1]
+by state: gen user_amount_pre1 = related_user_amount[_n+1]
+bysort state: egen crime_mean=mean(hate_crime)
+bysort state: gen k=hate_crime
+sum crime_mean if crime_indicator==1
 sum crime_mean if k==1, detail
-count if crime_mean >1 & n==0
-tab n if crime_mean>1
-tab state_name if crime_mean<1
-tab n if crime_mean>0.7
+count if crime_mean > 1 & hate_crime==0
+tab hate_crime if crime_mean>1
+tab state if crime_mean<1
+tab hate_crime if crime_mean>0.7
 tab state_name if crime_mean<0.7
 gen cr= (n/population)*10000
 bysort state_name: egen cr_mean=mean(cr)
@@ -27,54 +30,21 @@ tab state_name if cr <0.0016 & k==1
 tab n if cr_mean>0.0016
 sum cr_mean if k==1, detail
 gen ln_pop = ln(population)
+gen ln_user_amt = ln(related_user_amount)
+gen ln_user_ratio = ln(related_user_ratio)
+by state: gen ln_user_amount_lag1 = ln_user_amt[_n-1]
+by state: gen ln_user_ratio_lag1 = ln_user_ratio[_n-1]
+
 
 translate @Results Summary2.txt
 
 
 //Poisson Model
-poisson n mean_diff population i.ncandidate i.week i.nstate, robust cluster(nstate)
+xtpoisson hate_crime ln_user_ratio_lag1 ln_user_ratio i.date, fe vce(robust)
 poisson n mean_diff ln_pop i.ncandidate i.week i.nstate, robust cluster(nstate)
 poisson n mean_diff population i.week i.nstate trump_ratio, robust cluster(nstate)
 poisson n mean_diff ln_pop i.week i.nstate trump_ratio, robust cluster(nstate)
 xtpoisson n mean_diff population i.ncandidate i.week posts, fe vce(robust)
-
-poisson n lag1 population i.ncandidate i.week i.nstate, robust cluster(nstate)
-poisson n lag1 ln_pop i.ncandidate i.week i.nstate, robust cluster(nstate)
-poisson n lag1 population i.week i.nstate trump_ratio, robust cluster(nstate)
-poisson n lag1 ln_pop i.week i.nstate trump_ratio, robust cluster(nstate)
-
-poisson n mean_diff population i.ncandidate i.week i.nstate if crime_mean > 1, robust cluster(nstate) 
-poisson n mean_diff population i.ncandidate i.week i.nstate if crime_mean > 0.7, robust cluster(nstate)
-poisson n mean_diff population trump_ratio i.week i.nstate if crime_mean > 1, robust cluster(nstate) 
-poisson n mean_diff population trump_ratio i.week i.nstate if crime_mean > 0.7, robust cluster(nstate)
-poisson n mean_diff ln_pop i.ncandidate i.week i.nstate if crime_mean > 1, robust cluster(nstate) 
-poisson n mean_diff ln_pop i.ncandidate i.week i.nstate if crime_mean > 0.7, robust cluster(nstate)
-poisson n mean_diff ln_pop trump_ratio i.week i.nstate if crime_mean > 1, robust cluster(nstate) 
-poisson n mean_diff ln_pop trump_ratio i.week i.nstate if crime_mean > 0.7, robust cluster(nstate)
-
-poisson n mean_diff population i.ncandidate i.week i.nstate if cr_mean > 0.0033, robust cluster(nstate) 
-poisson n mean_diff population i.ncandidate i.week i.nstate if cr_mean > 0.0016, robust cluster(nstate)
-poisson n mean_diff population trump_ratio i.week i.nstate if cr_mean > 0.0033, robust cluster(nstate) 
-poisson n mean_diff population trump_ratio i.week i.nstate if cr_mean > 0.0016, robust cluster(nstate)
-poisson n mean_diff ln_pop i.ncandidate i.week i.nstate if cr_mean > 0.0033, robust cluster(nstate) 
-poisson n mean_diff ln_pop i.ncandidate i.week i.nstate if cr_mean > 0.0016, robust cluster(nstate)
-poisson n mean_diff ln_pop trump_ratio i.week i.nstate if cr_mean > 0.0033, robust cluster(nstate) 
-poisson n mean_diff ln_pop trump_ratio i.week i.nstate if cr_mean > 0.0016, robust cluster(nstate)
-
-poisson n mean_diff population i.ncandidate i.week i.nstate if cr_mean > 0.0033, robust cluster(nstate)
-xtpoisson n mean_diff population i.ncandidate i.week if cr_mean > 0.0033, fe vce(robust) 
-poisson n mean_diff population i.ncandidate i.week i.nstate if cr_mean > 0.0016, robust cluster(nstate)
-xtpoisson n mean_diff population i.ncandidate i.week if cr_mean > 0.0016, fe vce(robust) 
-
-poisson n mean_diff population i.ncandidate i.week i.nstate if crime_mean < 1
-xtpoisson n mean_diff population i.ncandidate i.week if crime_mean < 1, fe vce(robust) 
-poisson n mean_diff population i.ncandidate i.week i.nstate if crime_mean < 0.7
-xtpoisson n mean_diff population i.ncandidate i.week if crime_mean < 0.7, fe vce(robust) 
-
-poisson n mean_diff population i.ncandidate i.week i.nstate if cr_mean < 0.0033
-xtpoisson n mean_diff population i.ncandidate i.week if cr_mean < 0.0033, fe vce(robust) 
-poisson n mean_diff population i.ncandidate i.week i.nstate if cr_mean < 0.0016
-xtpoisson n mean_diff population i.ncandidate i.week if cr_mean < 0.0016, fe vce(robust) 
 
 //OLS
 reg n mean_diff population i.ncandidate i.week i.nstate, cluster(nstate) robust
