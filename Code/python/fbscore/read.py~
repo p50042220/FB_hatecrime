@@ -169,7 +169,7 @@ def read_us_user_like_page_pd_df(input_path):
     """
 
     try:
-        us_user_like_page_pd_df = pd.read_csv(input_path
+        us_user_like_page_pd_df = pd.read_csv(input_path, converters={'like_pages': str, 'like_times': str}
         #                                    usecols = ["user_id", 
         #                                            "like_pages","like_times"]
                                             )        
