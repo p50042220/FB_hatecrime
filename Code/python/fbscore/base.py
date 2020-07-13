@@ -139,10 +139,10 @@ def page_score_to_user_score(page_score_dataframe, user_like_page_data):
 
     for i in tqdm(range(0, len(user_like_page_data["user_id"]))):
         #get lists of pages liked, and liked times by user 
-        user_id = user_like_page_data["user_id"][i]
-        like_page_list_str = str(user_like_page_data["like_pages"][i]).split(",")
+        user_id = user_like_page_data["user_id"].iloc[i]
+        like_page_list_str = str(user_like_page_data["like_pages"].iloc[i]).split(",")
         like_page_list = list(map( int, like_page_list_str))
-        like_time_list = str(user_like_page_data["like_times"][i]).split(",")
+        like_time_list = str(user_like_page_data["like_times"].iloc[i]).split(",")
         page_score_list = []
         like_times_list = []
         page_score_ungroup = []

@@ -39,7 +39,7 @@ def get_num_lines(file_path):
 
 
 
-def read_us_user_like_page(input_file_path):
+def read_us_user_like_page(input_file_path, user_range):
     """Reading data "us_user_like_page" into a python dictionary.
 
     First check the structure of the input file, then calulate the number
@@ -86,6 +86,10 @@ def read_us_user_like_page(input_file_path):
 
         for i, row in enumerate( tqdm( reader, 
                                     total = get_num_lines(input_file_path))):
+
+            if user_range == 'pure' and row['TYPE'].lower() == 'whole':
+                continue
+
             pageid_list = row['like_pages'].split(',')
 
             for j, p in enumerate(pageid_list):
@@ -139,7 +143,7 @@ def read_page_page_matrix(input_path):
 
 
 
-def read_us_user_like_page_pd_df(input_path):
+def read_us_user_like_page_pd_df(input_path, user_range):
     """Reading file "us_user_like_page" into a python dictionary.
 
     First check the structure of the input file, then calulate the number
@@ -172,7 +176,9 @@ def read_us_user_like_page_pd_df(input_path):
         us_user_like_page_pd_df = pd.read_csv(input_path, converters={'like_pages': str, 'like_times': str}
         #                                    usecols = ["user_id", 
         #                                            "like_pages","like_times"]
-                                            )        
+                                            )  
+        if user_range != 'all':
+            us_user_like_page_pd_df = us_user_like_page_pd_df[~us_user_like_page_pd_df.TYPE.isin(['whole', 'WHOLE'])]      
     except:
         raise incorrect_file_type("Input path Error")
 
