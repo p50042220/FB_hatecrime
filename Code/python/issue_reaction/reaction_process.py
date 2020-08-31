@@ -13,13 +13,13 @@ def combine_reaction(reaction_file, reaction_dir, post_data, user_type):
 
     df_list = []
     ind = True
-    for path in reaction_dir:
-	try:
-        df = pd.read_csv(f'{path}{reaction_file}', converters={'user_id': str})
-        df_list.append(df)
-	except:
-        ind = False
-        break
+    for path in reaction_dir:    
+	    try:
+            df = pd.read_csv(f'{path}{reaction_file}', converters={'user_id': str})
+            df_list.append(df)
+	    except:
+            ind = False
+            break
         
     if ind:
         df = pd.concat(df_list, axis=0) 
