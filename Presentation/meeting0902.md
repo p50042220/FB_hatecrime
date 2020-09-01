@@ -12,6 +12,7 @@
 * 零售商店的顯著性較弱
 * 六都
 * 看paper想到可以用poisson去估計(因為消費次數很少應為poisson distribution)，但跑了快兩萬個iteration還沒收斂.......
+* 接下來可以做的方向: 使用其他方式切分? 估計異質性效果?
 * exogenous variation? 在想是否有任何政策可以做個DiD/RDD去除內生性
 ## BLP
 * 估計願付價格時，空氣品質的下降程度部分，用是否為抗空汙口罩計?
