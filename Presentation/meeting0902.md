@@ -1,6 +1,7 @@
 #  CPI
 * 新電腦已攜入財資中心，且2016~2018的資料已全部轉移至新電腦並解壓縮完成，正在進行前處理中(希望能快點完成.....
 * 申請攜出先前標記過的七萬筆資料
+* 開始寫一些unsupervised的code，希望一旦資料處理完畢就可以直接跑程式
 * 希望九月底前可以有一些初步結果.........
 
 # 空汙
@@ -24,4 +25,24 @@
 
 
 # FB
+## Hate Crime
+* reaction amount 的 lag term 在 特定種類犯罪上呈現顯著，但一旦放入當週後效果就會通通被吃掉
+* 當週的內生性實在太強，互為因果，有找到paper中幾個外生變數的方法但沒有用QQ
+* 有試過panel data的granger causality，No causality QQ
+* comment amount/length/sentiment 都不顯著
+
+## Issue & Polarization
+* Polarization加劇
+* 負相關
+* 推測是集中到特定的大頁面
+* 尚在努力找證據中
+
+# 申請
+* PoliSci: NYU (Interest: Methodology, AR)
+* Marketing: Harvard, CMU, Cornell, Northwestern, Wharton, Columbia, U of Maryland, MIT, Duke (Interest: Quant, CRM/Social Media, digital marketing)
+* MIS: CMU, NYU, UW Seattle, U Minnesota (Interest: digital marketing, online information diffusion and peer effect)
+* Econ: pending.......(Brown? Media? Information?? No Idea.....
+
+
+
 
