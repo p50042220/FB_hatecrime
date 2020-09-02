@@ -32,6 +32,7 @@
 * 有試過panel data的granger causality，No causality QQ
 * comment length/sentiment 都不顯著
 * 接著想看川普宣佈競選後/幾個重大事件後是否有異質性效果，以及其他變數
+* 加入詳細人口變數
 
 ## Issue & Polarization
 * Polarization加劇
