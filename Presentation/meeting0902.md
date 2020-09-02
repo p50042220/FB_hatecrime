@@ -24,4 +24,24 @@
 
 
 # FB
+## Hate Crime
+* reaction amount 的 lag term 在 特定種類犯罪上呈現顯著，但一旦放入當週後效果就會通通被吃掉
+* 當週的內生性實在太強，互為因果，有找到paper中幾個外生變數的方法但沒有用QQ
+* 有試過panel data的granger causality，No causality QQ
+* comment amount/length/sentiment 都不顯著
+
+## Issue & Polarization
+* Polarization加劇
+* 負相關
+* 推測是集中到特定的大頁面
+* 尚在努力找證據中
+
+# 申請
+* PoliSci: NYU (Interest: Methodology, AR)
+* Marketing: Harvard, CMU, Cornell, Northwestern, Wharton, Columbia, U of Maryland, MIT, Duke (Interest: Quant, CRM/Social Media, digital marketing)
+* MIS: CMU, NYU, UW Seattle, U Minnesota (Interest: digital marketing, online information diffusion and peer effect)
+* Econ: pending.......(Brown? Media? Information?? No Idea.....
+
+
+
 
