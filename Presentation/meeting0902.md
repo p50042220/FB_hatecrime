@@ -31,6 +31,7 @@
 * 當週的內生性實在太強，互為因果，有找到paper中幾個外生變數的方法但沒有用QQ(一篇做德國的是用internet/FB outage, 一篇做美國的是用川普打高爾夫XD)
 * 有試過panel data的granger causality，No causality QQ
 * comment length/sentiment 都不顯著
+* 接著想看川普宣佈競選後/幾個重大事件後是否有異質性效果，以及其他變數
 
 ## Issue & Polarization
 * Polarization加劇
