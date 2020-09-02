@@ -32,7 +32,8 @@
 * 有試過panel data的granger causality，No causality QQ
 * comment length/sentiment 都不顯著
 * 接著想看川普宣佈競選後/幾個重大事件後是否有異質性效果，以及其他變數
-* 加入詳細人口變數
+* 加入year-county fixed effect後結果差不多
+* 加入詳細人口變數 -> 主要想看種族不均等的州會不會更嚴重（想看種族的inequality資料，正在努力尋找資料中......）
 
 ## Issue & Polarization
 * Polarization加劇
