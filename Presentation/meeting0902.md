@@ -27,9 +27,10 @@
 # FB
 ## Hate Crime
 * reaction amount 的 lag term 在 特定種類犯罪上呈現顯著，但一旦放入當週後效果就會通通被吃掉
+* 最樂觀的看起來是comment amount，lag term跟當週的term一起放入，lagterm還是相當顯著，而且控制情緒跟讚數後也一樣!!!!!(因為留言傳播力比較強？不過感覺要說是因果關係也是...很牽強？
 * 當週的內生性實在太強，互為因果，有找到paper中幾個外生變數的方法但沒有用QQ
 * 有試過panel data的granger causality，No causality QQ
-* comment amount/length/sentiment 都不顯著
+* comment length/sentiment 都不顯著
 
 ## Issue & Polarization
 * Polarization加劇
