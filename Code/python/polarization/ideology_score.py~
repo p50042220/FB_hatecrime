@@ -17,15 +17,15 @@ def combine_user_file(filename, user_type, path_head):
 
     type_df = pd.read_csv(f'{input_path}{filename}', converters={'user_id': str, 'like_pages': str, 'like_times': str})
     whole_df = pd.read_csv(f'{whole_path}{filename}', converters={'user_id': str, 'like_pages': str, 'like_times': str})
-    type_df['type'] = user_type
-    whole_df['type'] = 'whole'
+    type_df['TYPE'] = user_type
+    whole_df['TYPE'] = 'whole'
     df = pd.concat([type_df, whole_df], axis=0)
     df.to_csv(f'{input_path}{filename}', index=False)
 
-def page_score(filename, user_type, path_head):
+def page_score(filename, user_type, path_head, user_range):
 
     input_path = f'{path_head}user_like_page/{user_type}/'
-    output_path = f'{path_head}page_score/{user_type}/'
+    output_path = f'{path_head}page_score/{user_type}/{user_range}/'
 
     use.fb_score(
         input_format = "user_like_page",
@@ -35,12 +35,13 @@ def page_score(filename, user_type, path_head):
         page_info_path = '/home3/usfb/build/input/page/1000-page-and-politician-info.csv',
         overwrite_file = True,
         clinton_on_the_left = True,
-        page_id_column_index = 0)
+        page_id_column_index = 0,
+	user_range=user_range)
 
-def user_score(filename, user_type, path_head):
+def user_score(filename, user_type, path_head, user_range):
 
-    input_path = f'{path_head}page_score/{user_type}/'
-    output_path = f'{path_head}user_score/{user_type}/'
+    input_path = f'{path_head}page_score/{user_type}/{user_range}/'
+    output_path = f'{path_head}user_score/{user_type}/{user_range}/'
     user_path = f'{path_head}user_like_page/{user_type}/'
 
     use.fb_score(
@@ -49,26 +50,34 @@ def user_score(filename, user_type, path_head):
         input_path = f'{input_path}{filename}',
         output_path = f'{output_path}{filename}',
         user_like_path = f'{user_path}{filename}',
-        overwrite_file = True)
+        overwrite_file = True,
+	user_range=user_range)
 
 
-def main(user_type):
+def main(user_type, user_range):
 
     path_head = '/home3/r05322021/Desktop/FB Data/Polarization/'
-    file_list = [filename for filename in os.listdir(f'{path_head}user_like_page/{user_type}/')]
+    file_list = [filename for filename in os.listdir(f'{path_head}page_score/{user_type}/{user_range}/')]
 
 
-    print("Page Score Calculation")
-    if __name__ == '__main__':
-        with Pool(processes=5) as pool:
-            pool.map(partial(page_score, user_type=user_type, path_head=path_head), file_list)
-
-    #print("User Score Calculation")
+    #print("Combine User Like Pages")
     #if __name__ == '__main__':
         #with Pool(processes=5) as pool:
-            #pool.map(partial(user_score, user_type=user_type, path_head=path_head), file_list)
+            #pool.map(partial(combine_user_file, user_type=user_type, path_head=path_head), file_list)
+
+
+    #print("Page Score Calculation")
+    #if __name__ == '__main__':
+        #with Pool(processes=5) as pool:
+            #pool.map(partial(page_score, user_type=user_type, path_head=path_head, user_range=user_range), file_list)
+
+    print("User Score Calculation")
+    if __name__ == '__main__':
+        with Pool(processes=10) as pool:
+            pool.map(partial(user_score, user_type=user_type, path_head=path_head, user_range=user_range), file_list)
 
 
 if __name__ == '__main__':
     user_type = sys.argv[1]
-    main(user_type)
+    user_range = sys.argv[2]
+    main(user_type, user_range)

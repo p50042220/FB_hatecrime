@@ -57,28 +57,61 @@ def Calculate_difference(file_name, input_path, user_type, state_df):
 
 	trump, clinton = find_match_candidate_ideology(file_name, input_path, user_type)
 	date = file_name
-	user_df = pd.read_csv(f'{input_path}user_score/{user_type}/{file_name}', usecols = ["user_id", "user_PC1_mean_weighted"], converters={'user_id': str})
-	user_df['partisan'] = user_df['user_PC1_mean_weighted'].apply(lambda x: 'Trump' if abs(x - trump) < abs(x - clinton) else 'Clinton')
-	total_mean = user_df.user_PC1_mean_weighted.mean()
-	total_std = user_df.user_PC1_mean_weighted.std()
-	state = pd.merge(user_df, state_df, how='inner', on='user_id')
+	if user_type != 'whole':
+		type_df = pd.read_csv(f'{input_path}user_like_page/{user_type}/{file_name}', usecols=['user_id', 'TYPE'], converters={'user_id': str})
+		user_df = pd.read_csv(f'{input_path}user_score/{user_type}/{file_name}', usecols = ["user_id", "user_PC1_mean_weighted"], converters={'user_id': str})
+		user_df['partisan'] = user_df['user_PC1_mean_weighted'].apply(lambda x: 'Trump' if abs(x - trump) < abs(x - clinton) else 'Clinton')
+		user_df = pd.merge(user_df, type_df, how='inner', on='user_id')
+		type_list = [group[1] for group in user_df.groupby(by='TYPE')] + [user_df]
+		result_df_list = []
+		for df in type_list:
+			total_mean = df.user_PC1_mean_weighted.mean()
+			total_std = df.user_PC1_mean_weighted.std()
+			state = pd.merge(df, state_df, how='inner', on='user_id')
 
-	state_list = [group[1] for group in state.groupby(state['state'])]
-	df_list = state_list + [user_df]
-	result_list = []
+			state_list = [group[1] for group in state.groupby(state['state'])]
+			df_list = state_list + [df]
+			result_list = []
 	
-	for df in df_list:
-		result = return_statistics(df, total_mean, total_std)
-		result_list.append(result)
+			for d in df_list:
+				result = return_statistics(d, total_mean, total_std)
+				result_list.append(result)
 
-	result_df = pd.DataFrame(np.stack(result_list), columns=['state', 'ideology_mean', 'ideology_std', 'polarization_mean', 'polarization_median', 'total', 'trump_share', 'clinton_share', 'extreme_right_abs', 'extreme_left_abs', 'extreme_right_std', 'extreme_left_std', 'extreme_right_2std', 'extreme_left_2std'])
+			result_df = pd.DataFrame(np.stack(result_list), columns=['state', 'ideology_mean', 'ideology_std', 'polarization_mean', 'polarization_median', 'total', 'trump_share', 'clinton_share', 'extreme_right_abs', 'extreme_left_abs', 'extreme_right_std', 'extreme_left_std', 'extreme_right_2std', 'extreme_left_2std'])
+			if len(df.TYPE.unique()) == 1:
+				result_df['type'] = df.TYPE.unique()[0]
+			else:
+				result_df['type'] = 'all'
+
+			result_df_list.append(result_df)
+
+		result_df = pd.concat(result_df_list, axis=0)
+			
+	
+	else:
+		user_df = pd.read_csv(f'{input_path}user_score/{user_type}/{file_name}', usecols = ["user_id", "user_PC1_mean_weighted"], converters={'user_id': str})
+
+		user_df['partisan'] = user_df['user_PC1_mean_weighted'].apply(lambda x: 'Trump' if abs(x - trump) < abs(x - clinton) else 'Clinton')
+	
+		total_mean = user_df.user_PC1_mean_weighted.mean()
+		total_std = user_df.user_PC1_mean_weighted.std()
+		state = pd.merge(user_df, state_df, how='inner', on='user_id')
+
+		state_list = [group[1] for group in state.groupby(state['state'])]
+		df_list = state_list + [user_df]
+		result_list = []
+	
+		for df in df_list:
+			result = return_statistics(df, total_mean, total_std)
+			result_list.append(result)
+
+		result_df = pd.DataFrame(np.stack(result_list), columns=['state', 'ideology_mean', 'ideology_std', 'polarization_mean', 'polarization_median', 'total', 'trump_share', 'clinton_share', 'extreme_right_abs', 'extreme_left_abs', 'extreme_right_std', 'extreme_left_std', 'extreme_right_2std', 'extreme_left_2std'])
 
 	return [result_df, date]
 
 def main(user_type):
 	input_path = "/home3/r05322021/Desktop/FB Data/Polarization/"
 	user_file_list = os.listdir(f'{input_path}user_score/{user_type}')
-
 	
 	#bigquery_auth()
 	#state_query = '''
@@ -89,12 +122,12 @@ def main(user_type):
 	#state_df = gbq.read_gbq(state_query, project_id='ntufbdata')
 	#state_df.to_csv('/home3/r05322021/Desktop/FB Data/user_state/user_state_all.csv', index=False)
 	state_df = pd.read_csv('/home3/r05322021/Desktop/FB Data/information/user_state_info.csv', converters={'user_id': str})
-	save_dir = '/home3/r05322021/Desktop/FB Data/Polarization/state/whole/'
+	save_dir = f'/home3/r05322021/Desktop/FB Data/Polarization/state/{user_type}/'
 
 	if __name__ == '__main__':
-		with Pool(processes=24) as pool:
+		with Pool(processes=10) as pool:
 			for _, x in enumerate(tqdm(pool.imap_unordered(partial(Calculate_difference, input_path=input_path, user_type=user_type, state_df=state_df), user_file_list), total=len(user_file_list)), 1):
-				x[0].to_csv(f'{save_dir}ideology_state_{x[1]}.csv', index=False)
+				x[0].to_csv(f'{save_dir}ideology_state_{x[1]}', index=False)
 		
 
 if __name__ == '__main__':
