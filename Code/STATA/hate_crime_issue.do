@@ -12,6 +12,13 @@ gen user_total = round(related_user_amount/related_user_ratio)
 gen FB_ratio = user_total/population
 gen reaction_post_ratio = related_reaction_amount/related_post_amount
 
+
+//Construct Another variable
+gen time = 1
+bysort nstate: gen Week = sum(time)
+drop time
+
+
 //Summary Statistics
 //Calculate state-level mean
 bysort state: egen crime_mean_state = mean(hate_crime)
@@ -315,9 +322,4 @@ foreach var in hate_crime racial_crime racial_broad_crime{
 
 log close
 
-foreach var in hate_crime racial_crime racial_broad_crime{
-	
-	xtreg `var' ln_comment_amt l.ln_comment_amt related_comment_negative_ratio l.related_comment_negative_ratio i.date population FB_ratio trump_share, fe robust
-	xtreg `var' ln_comment_amt l.ln_comment_amt related_comment_negative_ratio l.related_comment_negative_ratio i.date ln_pop FB_ratio trump_share, fe robust
-	
-}
+
