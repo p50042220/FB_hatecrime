@@ -11,6 +11,8 @@ gen hate_cr = hate_crime_rate * 10000
 gen user_total = round(related_user_amount/related_user_ratio)
 gen FB_ratio = user_total/population
 gen reaction_post_ratio = related_reaction_amount/related_post_amount
+gen month = month(date)
+gen year = year(date)
 
 
 //Construct Another variable
@@ -97,8 +99,8 @@ foreach var in hate_crime racial_crime racial_broad_crime{
 
 foreach var in hate_crime racial_crime racial_broad_crime{
 	
-	xtreg `var' ln_reaction_amt l.ln_reaction_amt i.date population FB_ratio trump_share, fe robust
-	xtreg `var' ln_reaction_amt l.ln_reaction_amt i.date ln_pop FB_ratio  trump_share, fe robust
+	xtreg `var' ln_reaction_amt l.ln_reaction_amt i.date population FB_ratio trump_share i.year#i.nstate, fe robust
+	xtreg `var' ln_reaction_amt l.ln_reaction_amt i.date ln_pop FB_ratio  trump_share i.year#i.nstate, fe robust
 	
 }
 
@@ -181,8 +183,8 @@ foreach var in hate_crime racial_crime racial_broad_crime{
 
 foreach var in hate_crime racial_crime racial_broad_crime{
 	
-	xtreg `var' ln_comment_amt l.ln_comment_amt i.date population FB_ratio trump_share, fe robust
-	xtreg `var' ln_comment_amt l.ln_comment_amt i.date ln_pop FB_ratio trump_share, fe robust
+	xtreg `var' ln_comment_amt l.ln_comment_amt i.date population FB_ratio trump_share, fe cluster(nstate) robust
+	xtreg `var' ln_comment_amt l.ln_comment_amt i.date ln_pop FB_ratio trump_share, fe cluster(nstate) robust
 	
 }
 
@@ -315,7 +317,7 @@ foreach var in hate_crime racial_crime racial_broad_crime{
 
 foreach var in hate_crime racial_crime racial_broad_crime{
 	
-	xtreg `var' related_comment_negative_ratio i.date population FB_ratio trump_share ln_post_amt, fe robust
+	xtreg `var' related_comment_negative_ratio i.date population FB_ratio trump_share ln_post_amt , fe robust
 	xtreg `var' related_comment_negative_ratio i.date ln_pop FB_ratio trump_share ln_post_amt, fe robust
 	
 }

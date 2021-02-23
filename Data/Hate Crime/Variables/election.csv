@@ -1,0 +1,50 @@
+﻿state,election_rep,election_dem,Trump
+Alabama,0.61,0.34,1
+Alaska,0.51,0.37,1
+Arizona,0.48,0.45,1
+Arkansas,0.61,0.34,1
+California,0.32,0.62,0
+Colorado,0.43,0.48,0
+Connecticut,0.41,0.55,0
+Delaware,0.42,0.53,0
+Florida,0.49,0.47,1
+Georgia,0.5,0.45,1
+Idaho,0.59,0.28,1
+Illinois,0.38,0.55,0
+Indiana,0.57,0.38,1
+Iowa,0.51,0.42,1
+Kansas,0.56,0.36,1
+Kentucky,0.63,0.33,1
+Louisiana,0.58,0.38,1
+Maine,0.45,0.48,0
+Maryland,0.34,0.6,0
+Massachusetts,0.33,0.6,0
+Michigan,0.47,0.47,1
+Minnesota,0.45,0.46,0
+Mississippi,0.58,0.4,1
+Missouri,0.56,0.38,1
+Montana,0.56,0.35,1
+Nebraska,0.59,0.34,1
+Nevada,0.46,0.48,0
+New Hampshire,0.47,0.47,0
+New Jersey,0.41,0.55,0
+New Mexico,0.4,0.48,0
+New York,0.37,0.59,0
+North Carolina,0.5,0.46,1
+North Dakota,0.63,0.27,1
+Ohio,0.51,0.51,0
+Oklahoma,0.65,0.29,1
+Oregon,0.39,0.5,0
+Pennsylvania,0.48,0.48,1
+Rhode Island,0.39,0.54,0
+South Carolina,0.55,0.41,1
+South Dakota,0.62,0.32,1
+Tennessee,0.61,0.35,1
+Texas,0.52,0.43,1
+Utah,0.45,0.27,1
+Vermont,0.3,0.57,0
+Virginia,0.44,0.5,0
+Washington,0.37,0.53,0
+West Virginia,0.68,0.26,1
+Wisconsin,0.47,0.48,1
+Wyoming,0.68,0.22,1
